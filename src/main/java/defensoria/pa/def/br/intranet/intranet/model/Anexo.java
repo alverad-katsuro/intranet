@@ -26,7 +26,7 @@ public class Anexo {
     private String tituloAnexo;
     @Column(name = "nome_anexo", nullable = false, unique = false, length = 60)
     private String nomeAnexo;
-    @Column(name = "pasta_anexo", nullable = false, unique = false, length = 60)
+    @Column(name = "pasta_anexo", nullable = false, unique = true, length = 60)
     private String pastaAnexo;
     @Column(name = "categoria_anexo", nullable = false, unique = false, length = 60)
     private String categoriaAnexo;

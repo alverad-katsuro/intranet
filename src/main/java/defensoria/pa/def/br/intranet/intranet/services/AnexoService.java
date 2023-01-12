@@ -1,15 +1,21 @@
 package defensoria.pa.def.br.intranet.intranet.services;
 
-import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.UUID;
+import java.nio.file.StandardCopyOption;
+import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import defensoria.pa.def.br.intranet.intranet.model.Anexo;
@@ -21,71 +27,76 @@ public class AnexoService {
     @Autowired
     private AnexoRepository anexoRepository;
 
-    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/anexos/";
+    
+    @Value("${env.anexosDir}")
+    private String UPLOAD_DIRECTORY;
 
-    @Transactional
-    public Anexo saveAnexo(Anexo anexo, MultipartFile file){
-        //anexo.setPastaAnexo(UPLOAD_DIRECTORY + "/" + anexo.getPastaAnexo());
-        if (file != null) {
-            try {
-                if (Files.deleteIfExists(new File(UPLOAD_DIRECTORY + anexo.getNomeAnexo()).toPath())) {
-                    System.out.println("ARQUIVO DELETADO");
-                } else {
-                    System.out.println("ARQUIVO NÂO DELETADO");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            File folder = new File(UPLOAD_DIRECTORY);
-            if (!folder.exists()) {
-                folder.mkdir();
-            }
-            String novo_nome;
-            Path path;
-            do {
-                novo_nome = UUID.randomUUID().toString() + ".png";
-                path = Paths.get(UPLOAD_DIRECTORY, novo_nome);
-                System.out.println(path.toString());
-            
-            } while(path.toFile().isFile());
-            
-            anexo.setNomeAnexo(novo_nome);
-            anexo = saveAnexo(anexo);
-            if (anexo.getIdAnexo() != 0) {
-                try {
-                    Files.write(path, file.getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }                
-            }
-        } else {
-            anexo = saveAnexo(anexo);
+    public Anexo saveAnexo(Anexo anexo, MultipartFile arquivo) throws IOException {
+        Path uploadPath = Paths.get(UPLOAD_DIRECTORY + "/" + anexo.getPastaAnexo());
+          
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
         }
+ 
+        String fileCode = RandomStringUtils.randomAlphanumeric(16);
+        String[] nomeAnexoOriginal = arquivo.getOriginalFilename().split("\\.");
+        anexo.setNomeAnexo(fileCode +"."+ nomeAnexoOriginal[nomeAnexoOriginal.length - 1]);
+         
+        try (InputStream inputStream = arquivo.getInputStream()) {
+            Path filePath = uploadPath.resolve(anexo.getNomeAnexo());
+            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException ioe) {       
+            throw new IOException("Could not save file: " + arquivo.getOriginalFilename(), ioe);
+        }
+
+        anexo = saveAnexo(anexo);
+         
         return anexo;
     }
 
-    @Transactional
+    public Anexo updateAnexo(Anexo anexo, MultipartFile arquivo) throws IOException {
+        Path uploadPath = Paths.get(UPLOAD_DIRECTORY + "/" + anexo.getPastaAnexo());         
+        try (InputStream inputStream = arquivo.getInputStream()) {
+            Path filePath = uploadPath.resolve(anexo.getNomeAnexo());
+            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException ioe) {       
+            throw new IOException("Could not update file: " + arquivo.getOriginalFilename(), ioe);
+        }
+        anexo = saveAnexo(anexo);
+        return anexo;
+    }
+
     public Anexo saveAnexo(Anexo anexo){
         return anexoRepository.save(anexo);
     }
 
-    @Transactional
     public Iterable<Anexo> getAllAnexo(){
         return anexoRepository.findAll();
     }
 
-    @Transactional
     public Anexo getAnexo(int anexoId){
         return anexoRepository.findById(anexoId).get();
     }
 
-    @Transactional
-    public void deleteAnexo(Anexo anexo) {
-        anexoRepository.delete(anexo);
+    public List<Anexo> findByPastaAnexo(String pastaAnexo){
+        return anexoRepository.findByPastaAnexo(pastaAnexo);
     }
 
-    // @Transactional
-    // public Iterable<Anexo> getAnexoByCategoria(int categoriaId){
-    //     return anexoRepository.findByCategoria(categoriaId);
-    // }
+    public boolean existsById(int anexoId){
+        return anexoRepository.existsById(anexoId);
+    }
+
+    public Resource getFileAsResource(String nomeAnexo) throws MalformedURLException, FileNotFoundException{
+        Anexo anexo = anexoRepository.findByNomeAnexo(nomeAnexo).orElse(null);
+        return getFileAsResource(anexo);
+    }
+
+    public Resource getFileAsResource(Anexo anexo) throws MalformedURLException, FileNotFoundException {
+        Path file = Paths.get(String.format("%s/%s/%s", UPLOAD_DIRECTORY, anexo.getPastaAnexo(), anexo.getNomeAnexo()));
+        if (file != null) {
+            return new UrlResource(file.toUri());
+        } else {
+            throw new FileNotFoundException(anexo.getTituloAnexo());
+        }
+    }    
 }

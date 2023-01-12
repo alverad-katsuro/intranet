@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "env.anexosDir",
+    "type": "java.lang.String",
+    "description": "Configura a pasta que os anexos serão salvos."
+  },
+  {
+    "name": "env.anexosDir",
+    "type": "java.lang.String",
+    "description": "A description for 'env.anexosDir'"
+  }
+]}
