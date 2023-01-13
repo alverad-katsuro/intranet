@@ -31,6 +31,7 @@ import lombok.NoArgsConstructor;
 public class Anexo extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_anexo", nullable = false, unique = true)
     private Integer idAnexo;
     
     @Audited

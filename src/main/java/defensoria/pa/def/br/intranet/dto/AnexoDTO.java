@@ -16,7 +16,7 @@ public class AnexoDTO {
     
     private String nomeAnexo;
     
-    private String pastaAnexo;
+    private AnexoDominioDTO anexoDominio;
     
     private String categoriaAnexo;
     

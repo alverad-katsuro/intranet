@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -49,7 +50,7 @@ public class AnexoDominioController {
     }
     
     @PostMapping(value="/salvar")
-    public ResponseEntity<AnexoDominioDTO> saveAnexoDominio(@ModelAttribute AnexoDominioDTO anexoDominioDTO) {
+    public ResponseEntity<AnexoDominioDTO> saveAnexoDominio(@RequestBody AnexoDominioDTO anexoDominioDTO) {
         AnexoDominio anexoDominio = convertToEntity(anexoDominioDTO);
         anexoDominio = anexoDominioService.saveAnexoDominio(anexoDominio);
         return ResponseEntity.ok(convertToDTO(anexoDominio));
