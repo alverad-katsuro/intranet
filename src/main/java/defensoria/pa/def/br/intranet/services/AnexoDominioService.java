@@ -23,7 +23,7 @@ public class AnexoDominioService {
     }
 
     public AnexoDominio getAnexoDominio(int anexoId){
-        return anexoDominioRepository.findById(anexoId).get();
+        return anexoDominioRepository.findById(anexoId).orElse(null);
     }
 
     public AnexoDominio getAnexoDominio(String nomeAnexoDominio){

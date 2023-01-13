@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import defensoria.pa.def.br.intranet.dto.AnexoDTO;
 import defensoria.pa.def.br.intranet.model.Anexo;
+import defensoria.pa.def.br.intranet.model.AnexoDominio;
+import defensoria.pa.def.br.intranet.services.AnexoDominioService;
 import defensoria.pa.def.br.intranet.services.AnexoService;
 
 
@@ -35,6 +37,9 @@ public class AnexoController {
     
     @Autowired
     AnexoService anexoService;
+
+    @Autowired
+    AnexoDominioService anexoDominioService;
 
     @Autowired
     ModelMapper modelMapper;  
@@ -62,8 +67,16 @@ public class AnexoController {
     }
     
     @PostMapping(value="/salvar", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<AnexoDTO> saveAnexo(@ModelAttribute AnexoDTO anexoDTO) throws IOException {
+    public ResponseEntity<AnexoDTO> saveAnexo(@ModelAttribute AnexoDTO anexoDTO, @ModelAttribute Integer anexoDominioId) throws Exception {
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        System.out.println(anexoDominioId);
         Anexo anexo = convertToEntity(anexoDTO);
+        AnexoDominio anexoDominio = anexoDominioService.getAnexoDominio(anexoDominioId);
+        if (anexoDominio != null) {
+            anexo.setAnexoDominio(anexoDominio);
+        } else {
+            throw new Exception("Anexo Dominio invalido");
+        }
         anexo = anexoService.saveAnexo(anexo, anexoDTO.getArquivo());
         return ResponseEntity.ok(convertToDTO(anexo));
     }
