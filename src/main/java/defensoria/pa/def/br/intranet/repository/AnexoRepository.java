@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import defensoria.pa.def.br.intranet.model.Anexo;
+import defensoria.pa.def.br.intranet.model.AnexoDominio;
 
 public interface AnexoRepository extends CrudRepository<Anexo, Integer> {
     Optional<Anexo> findByNomeAnexo(String nomeAnexo);
@@ -15,5 +16,7 @@ public interface AnexoRepository extends CrudRepository<Anexo, Integer> {
     @Query(value = "Select tituloAnexo from Anexo where nomeAnexo = :nomeAnexo")
     Optional<String> selectTituloAnexoByNomeAnexo(@Param("nomeAnexo") String nomeAnexo);
 
-    List<Anexo> findByPastaAnexo(String pastaAnexo);
+    List<Anexo> findByAnexoDominio(AnexoDominio anexoDominio);
+
+    List<Anexo> findAll();
 }

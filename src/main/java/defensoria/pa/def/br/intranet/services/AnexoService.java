@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import defensoria.pa.def.br.intranet.model.Anexo;
+import defensoria.pa.def.br.intranet.model.AnexoDominio;
+import defensoria.pa.def.br.intranet.repository.AnexoDominioRepository;
 import defensoria.pa.def.br.intranet.repository.AnexoRepository;
 
 @Service("AnexoService")
@@ -28,20 +30,22 @@ public class AnexoService {
     @Autowired
     private AnexoRepository anexoRepository;
 
+    @Autowired
+    private AnexoDominioRepository anexoDominioRepository;
+
     
     @Value("${env.anexosDir}")
     private String UPLOAD_DIRECTORY;
 
     public Anexo saveAnexo(Anexo anexo, MultipartFile arquivo) throws IOException {
-        Path uploadPath = Paths.get(UPLOAD_DIRECTORY + "/" + anexo.getPastaAnexo());
+        Path uploadPath = Paths.get(UPLOAD_DIRECTORY + "/" + anexo.getAnexoDominio().getNomeAnexoDominio());
           
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
  
         String fileCode = RandomStringUtils.randomAlphanumeric(16);
-        String[] nomeAnexoOriginal = arquivo.getOriginalFilename().split("\\.");
-        anexo.setNomeAnexo(fileCode +"."+ nomeAnexoOriginal[nomeAnexoOriginal.length - 1]);
+        anexo.setNomeAnexo(fileCode +".pdf");
          
         try (InputStream inputStream = arquivo.getInputStream()) {
             Path filePath = uploadPath.resolve(anexo.getNomeAnexo());
@@ -56,7 +60,7 @@ public class AnexoService {
     }
 
     public Anexo updateAnexo(Anexo anexo, MultipartFile arquivo) throws IOException {
-        Path uploadPath = Paths.get(UPLOAD_DIRECTORY + "/" + anexo.getPastaAnexo());         
+        Path uploadPath = Paths.get(UPLOAD_DIRECTORY + "/" + anexo.getAnexoDominio().getNomeAnexoDominio());         
         try (InputStream inputStream = arquivo.getInputStream()) {
             Path filePath = uploadPath.resolve(anexo.getNomeAnexo());
             Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
@@ -71,8 +75,18 @@ public class AnexoService {
         return anexoRepository.save(anexo);
     }
 
-    public Iterable<Anexo> getAllAnexo(){
+    public List<Anexo> getAllAnexo(){
         return anexoRepository.findAll();
+    }
+
+
+    public List<Anexo> findByAnexoDominio(String nomeAnexoDominio){
+        return findByAnexoDominio(anexoDominioRepository.findByNomeAnexoDominio(nomeAnexoDominio).orElse(null));
+    }
+
+
+    public List<Anexo> findByAnexoDominio(AnexoDominio anexoDominio){
+        return anexoRepository.findByAnexoDominio(anexoDominio);
     }
 
     public String selectTituloAnexoByNomeAnexo(String nomeAnexo){
@@ -82,10 +96,6 @@ public class AnexoService {
 
     public Anexo getAnexo(int anexoId){
         return anexoRepository.findById(anexoId).get();
-    }
-
-    public List<Anexo> findByPastaAnexo(String pastaAnexo){
-        return anexoRepository.findByPastaAnexo(pastaAnexo);
     }
 
     public boolean existsById(int anexoId){
@@ -98,7 +108,7 @@ public class AnexoService {
     }
 
     public Resource getFileAsResource(Anexo anexo) throws MalformedURLException, FileNotFoundException {
-        Path file = Paths.get(String.format("%s/%s/%s", UPLOAD_DIRECTORY, anexo.getPastaAnexo(), anexo.getNomeAnexo()));
+        Path file = Paths.get(String.format("%s/%s/%s", UPLOAD_DIRECTORY, anexo.getAnexoDominio().getNomeAnexoDominio(), anexo.getNomeAnexo()));
         if (file != null) {
             return new UrlResource(file.toUri());
         } else {

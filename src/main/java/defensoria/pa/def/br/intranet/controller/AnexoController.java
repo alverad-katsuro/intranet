@@ -3,7 +3,6 @@ package defensoria.pa.def.br.intranet.controller;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -30,9 +29,6 @@ import defensoria.pa.def.br.intranet.model.Anexo;
 import defensoria.pa.def.br.intranet.services.AnexoService;
 
 
-
-
-
 @RestController
 @RequestMapping("/anexo")
 public class AnexoController {
@@ -41,12 +37,11 @@ public class AnexoController {
     AnexoService anexoService;
 
     @Autowired
-    ModelMapper modelMapper;
+    ModelMapper modelMapper;  
 
-    @GetMapping(value="/buscarAnexos", params = {"pastaAnexo"})
-    public ResponseEntity<List<Anexo>> getAnexos(@RequestParam String pastaAnexo) {
-        List<Anexo> anexosList = anexoService.findByPastaAnexo(pastaAnexo);
-        System.out.println("AAAAAAAAA");
+    @GetMapping(value="/buscarAnexos", params = {"anexoDominio"})
+    public ResponseEntity<List<Anexo>> getAnexos(@RequestParam String anexoDominio) {
+        List<Anexo> anexosList = anexoService.findByAnexoDominio(anexoDominio);
         if (anexosList.isEmpty()) {
             return ResponseEntity.badRequest().body(null);
         } else {
@@ -57,13 +52,9 @@ public class AnexoController {
 
     @GetMapping("/buscarAnexo/{anexoNome}")
     public ResponseEntity<Resource> getAnexo(@PathVariable("anexoNome") String anexoNome) throws MalformedURLException, FileNotFoundException {        
-        Resource resource = null;
-        resource = anexoService.getFileAsResource(anexoNome);
+        Resource resource = anexoService.getFileAsResource(anexoNome);
         String contentType = "application/octet-stream";
-        String nomeOri[] = resource.getFilename().split("\\.");
-        String extensao = nomeOri[nomeOri.length - 1];
-        nomeOri = null;
-        String headerValue = String.format("attachment; filename=\"%s.%s\"", anexoService.selectTituloAnexoByNomeAnexo(anexoNome), extensao);
+        String headerValue = String.format("attachment; filename=\"%s.%s\"", anexoService.selectTituloAnexoByNomeAnexo(anexoNome), "pdf");
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
@@ -81,7 +72,11 @@ public class AnexoController {
     public ResponseEntity<Anexo> atualizarAnexo(@ModelAttribute AnexoDTO anexoDTO, @PathVariable int anexoId) throws IOException {
         Anexo anexo = convertToEntity(anexoDTO);
         if (anexoService.existsById(anexoId)) {
-            anexo = anexoService.updateAnexo(anexo, anexoDTO.getArquivo());
+            if (anexoDTO.getArquivo().isEmpty()) {
+                anexo = anexoService.saveAnexo(anexo);
+            } else {
+                anexo = anexoService.updateAnexo(anexo, anexoDTO.getArquivo());
+            }
             return ResponseEntity.ok(anexo);
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
