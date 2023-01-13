@@ -1,4 +1,4 @@
-package defensoria.pa.def.br.intranet.intranet.dto;
+package defensoria.pa.def.br.intranet.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 

@@ -64,12 +64,12 @@
 		
 		<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-envers -->
 		<!-- 
-			<dependency>
-				<groupId>org.springframework.data</groupId>
-				<artifactId>spring-data-envers</artifactId>
-				<version>3.0.0</version>
-			</dependency>
 		-->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-envers</artifactId>
+			<version>3.0.0</version>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-text -->
 		<dependency>

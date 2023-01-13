@@ -1,4 +1,4 @@
-package defensoria.pa.def.br.intranet.intranet.services;
+package defensoria.pa.def.br.intranet.services;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import defensoria.pa.def.br.intranet.intranet.model.Anexo;
-import defensoria.pa.def.br.intranet.intranet.repository.AnexoRepository;
+import defensoria.pa.def.br.intranet.model.Anexo;
+import defensoria.pa.def.br.intranet.repository.AnexoRepository;
 
 @Service("AnexoService")
 public class AnexoService {
@@ -72,6 +73,11 @@ public class AnexoService {
 
     public Iterable<Anexo> getAllAnexo(){
         return anexoRepository.findAll();
+    }
+
+    public String selectTituloAnexoByNomeAnexo(String nomeAnexo){
+        Optional<String> tituloAnexo = anexoRepository.selectTituloAnexoByNomeAnexo(nomeAnexo);
+        return tituloAnexo.orElse(null);
     }
 
     public Anexo getAnexo(int anexoId){

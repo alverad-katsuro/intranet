@@ -1,4 +1,4 @@
-package defensoria.pa.def.br.intranet.intranet.security;
+package defensoria.pa.def.br.intranet.security;
 
 import java.util.Arrays;
 

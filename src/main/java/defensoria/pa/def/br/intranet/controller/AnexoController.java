@@ -1,4 +1,4 @@
-package defensoria.pa.def.br.intranet.intranet.controller;
+package defensoria.pa.def.br.intranet.controller;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,13 +21,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import defensoria.pa.def.br.intranet.intranet.dto.AnexoDTO;
-import defensoria.pa.def.br.intranet.intranet.model.Anexo;
-import defensoria.pa.def.br.intranet.intranet.services.AnexoService;
-import org.springframework.web.bind.annotation.RequestParam;
+import defensoria.pa.def.br.intranet.dto.AnexoDTO;
+import defensoria.pa.def.br.intranet.model.Anexo;
+import defensoria.pa.def.br.intranet.services.AnexoService;
 
 
 
@@ -56,13 +56,14 @@ public class AnexoController {
     
 
     @GetMapping("/buscarAnexo/{anexoNome}")
-    public ResponseEntity<?> getAnexo(@PathVariable("anexoNome") String anexoNome) throws MalformedURLException, FileNotFoundException {        
+    public ResponseEntity<Resource> getAnexo(@PathVariable("anexoNome") String anexoNome) throws MalformedURLException, FileNotFoundException {        
         Resource resource = null;
         resource = anexoService.getFileAsResource(anexoNome);
-         
         String contentType = "application/octet-stream";
-        String headerValue = "attachment; filename=\"" + resource.getFilename() + "\"";
-         
+        String nomeOri[] = resource.getFilename().split("\\.");
+        String extensao = nomeOri[nomeOri.length - 1];
+        nomeOri = null;
+        String headerValue = String.format("attachment; filename=\"%s.%s\"", anexoService.selectTituloAnexoByNomeAnexo(anexoNome), extensao);
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
@@ -77,7 +78,7 @@ public class AnexoController {
     }
 
     @PutMapping(value="/atualizar/{anexoId}")
-    public ResponseEntity<Anexo> putMethodName(@ModelAttribute AnexoDTO anexoDTO, @PathVariable int anexoId) throws IOException {
+    public ResponseEntity<Anexo> atualizarAnexo(@ModelAttribute AnexoDTO anexoDTO, @PathVariable int anexoId) throws IOException {
         Anexo anexo = convertToEntity(anexoDTO);
         if (anexoService.existsById(anexoId)) {
             anexo = anexoService.updateAnexo(anexo, anexoDTO.getArquivo());
