@@ -101,17 +101,8 @@ public class AnexoController {
         return anexoDTO;
     }
 
-    private List<AnexoDTO> convertToDTO(List<Anexo> anexoList){
-        List<AnexoDTO> anexoDTO = new ArrayList<>();
-        anexoList.forEach(p -> {
-            anexoDTO.add(modelMapper.map(p, AnexoDTO.class));
-        });
-        return anexoDTO;
-    }
-
     private Anexo convertToEntity(AnexoDTO anexoDTO){
         Anexo anexo = modelMapper.map(anexoDTO, Anexo.class);
         return anexo;
     }
-    
 }

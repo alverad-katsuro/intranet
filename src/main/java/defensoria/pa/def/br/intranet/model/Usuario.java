@@ -1,7 +1,5 @@
 package defensoria.pa.def.br.intranet.model;
 
-import org.hibernate.annotations.GeneratedColumn;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
