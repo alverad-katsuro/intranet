@@ -1,10 +1,15 @@
-package defensoria.pa.def.br.intranet.model;
+package defensoria.pa.def.br.intranet.model.anexo;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.envers.Audited;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import defensoria.pa.def.br.intranet.model.Auditable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,12 +17,18 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
-@Entity
+@DynamicUpdate
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity(name = "anexo_dominio")
 @EqualsAndHashCode(callSuper = false)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idAnexoDominio")
 public class AnexoDominio extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,5 +40,12 @@ public class AnexoDominio extends Auditable {
     private String nomeAnexoDominio;
 
     @OneToMany(mappedBy = "anexoDominio", fetch = FetchType.LAZY)
+    Set<AnexoCategoria> anexoCategorias = new HashSet<>(0);
+
+    @OneToMany(mappedBy = "anexoDominio", fetch = FetchType.LAZY)
     Set<Anexo> anexos = new HashSet<>(0);
+
+    public AnexoDominio(Integer idAnexoDominio){
+        this.idAnexoDominio = idAnexoDominio;
+    }
 }

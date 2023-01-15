@@ -2,6 +2,7 @@ package defensoria.pa.def.br.intranet.model;
 
 import java.util.Date;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -39,4 +40,9 @@ public class Auditable {
     @Column(name = "last_modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
+
+    @Audited
+    @Column(name = "ativo", nullable = false)
+    @ColumnDefault(value = "TRUE")
+    private Boolean ativo = true;
 }

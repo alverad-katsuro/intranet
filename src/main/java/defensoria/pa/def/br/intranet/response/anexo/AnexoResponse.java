@@ -1,7 +1,8 @@
-package defensoria.pa.def.br.intranet.dto;
+package defensoria.pa.def.br.intranet.response.anexo;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import defensoria.pa.def.br.intranet.dto.anexo.response.AnexoDominioDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AnexoDTO {   
+public class AnexoResponse {   
     private Integer idAnexo;
     
     private String tituloAnexo;
