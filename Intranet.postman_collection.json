@@ -1,0 +1,435 @@
+{
+	"info": {
+		"_postman_id": "e6716faa-7a79-4e94-ad93-f19ba49248eb",
+		"name": "Intranet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24368969"
+	},
+	"item": [
+		{
+			"name": "Anexos",
+			"item": [
+				{
+					"name": "BuscarAnexos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9000/anexo/buscarAnexos?nomeAnexoDominio=LEGISLACAO",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"anexo",
+								"buscarAnexos"
+							],
+							"query": [
+								{
+									"key": "nomeAnexoDominio",
+									"value": "LEGISLACAO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Doc",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{intranet}}/anexo/buscarAnexo?idAnexo=1",
+							"host": [
+								"{{intranet}}"
+							],
+							"path": [
+								"anexo",
+								"buscarAnexo"
+							],
+							"query": [
+								{
+									"key": "idAnexo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dowload Doc",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{intranet}}/anexo/downloadAnexo?idAnexo=1",
+							"host": [
+								"{{intranet}}"
+							],
+							"path": [
+								"anexo",
+								"downloadAnexo"
+							],
+							"query": [
+								{
+									"key": "idAnexo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Submit Doc",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "arquivo",
+									"type": "file",
+									"src": "/home/alverad/Downloads/segunda_via.pdf"
+								},
+								{
+									"key": "tituloAnexo",
+									"value": "tituloAnexoa",
+									"type": "text"
+								},
+								{
+									"key": "nomeAnexo",
+									"value": "nomeAnexo",
+									"type": "text"
+								},
+								{
+									"key": "idAnexoDominio",
+									"value": "1",
+									"contentType": "Object",
+									"type": "text"
+								},
+								{
+									"key": "idAnexoCategoria",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "idAnexoSubCategoria",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{intranet}}/anexo/salvar",
+							"host": [
+								"{{intranet}}"
+							],
+							"path": [
+								"anexo",
+								"salvar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Doc",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "arquivo",
+									"type": "file",
+									"src": "/C:/Users/alfredo.oliveira/Downloads/Edital_n_02.2022.pdf"
+								},
+								{
+									"key": "tituloAnexo",
+									"value": "asdsadsad",
+									"type": "text"
+								},
+								{
+									"key": "nomeAnexo",
+									"value": "rudrLdqBOZbkmah5.pdf",
+									"type": "text"
+								},
+								{
+									"key": "nomeAnexoDominio",
+									"value": "{\n    \"idAnexoDominio\": 1,\n    \"nomeAnexoDominio\": \"legistação\"\n}",
+									"type": "text"
+								},
+								{
+									"key": "categoriaAnexo",
+									"value": "categoriaAnexo",
+									"type": "text"
+								},
+								{
+									"key": "subCategoriaAnexo",
+									"value": "subCategoriaAnexo",
+									"type": "text"
+								},
+								{
+									"key": "idAnexo",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{intranet}}/anexo/atualizar/1",
+							"host": [
+								"{{intranet}}"
+							],
+							"path": [
+								"anexo",
+								"atualizar",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AnexosDominio",
+			"item": [
+				{
+					"name": "Read All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{intranet}}/anexoDominio/buscarAnexoDominios",
+							"host": [
+								"{{intranet}}"
+							],
+							"path": [
+								"anexoDominio",
+								"buscarAnexoDominios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create AnexoDominio",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nomeAnexoDominio\": \"LEGISLACAO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{intranet}}/anexoDominio/salvar",
+							"host": [
+								"{{intranet}}"
+							],
+							"path": [
+								"anexoDominio",
+								"salvar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idAnexoDominio\": 1,\r\n    \"nomeAnexoDominio\": \"LEGISLACAO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{intranet}}/anexoDominio/atualizar/",
+							"host": [
+								"{{intranet}}"
+							],
+							"path": [
+								"anexoDominio",
+								"atualizar",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AnexosCategoria",
+			"item": [
+				{
+					"name": "Read All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{intranet}}/anexoCategoria/buscarAnexoCategorias",
+							"host": [
+								"{{intranet}}"
+							],
+							"path": [
+								"anexoCategoria",
+								"buscarAnexoCategorias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idAnexoDominio\": 1,\r\n    \"nomeAnexoCategoria\": \"asdsadsad\",\r\n    \"ativo\":false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{intranet}}/anexoCategoria/salvar",
+							"host": [
+								"{{intranet}}"
+							],
+							"path": [
+								"anexoCategoria",
+								"salvar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idAnexoDominio\": 1,\r\n    \"idAnexoCategoria\": 2,\r\n    \"nomeAnexoCategoria\": \"aaaaaa\",\r\n    \"ativo\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{intranet}}/anexoCategoria/atualizar/",
+							"host": [
+								"{{intranet}}"
+							],
+							"path": [
+								"anexoCategoria",
+								"atualizar",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AnexosSubCategoria",
+			"item": [
+				{
+					"name": "Read All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{intranet}}/anexoSubCategoria/buscarAnexoSubCategorias",
+							"host": [
+								"{{intranet}}"
+							],
+							"path": [
+								"anexoSubCategoria",
+								"buscarAnexoSubCategorias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idAnexoCategoria\": 1,\r\n    \"nomeAnexoSubCategoria\": \"aaajkjk\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{intranet}}/anexoSubCategoria/salvar",
+							"host": [
+								"{{intranet}}"
+							],
+							"path": [
+								"anexoSubCategoria",
+								"salvar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idAnexoSubCategoria\": 1,\r\n    \"idAnexoCategoria\": 1,\r\n    \"nomeAnexoSubCategoria\": \"1a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{intranet}}/anexoSubCategoria/atualizar/",
+							"host": [
+								"{{intranet}}"
+							],
+							"path": [
+								"anexoSubCategoria",
+								"atualizar",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
