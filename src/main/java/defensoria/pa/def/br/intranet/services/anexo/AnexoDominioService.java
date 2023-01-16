@@ -22,6 +22,10 @@ public class AnexoDominioService {
         return anexoDominioRepository.findAll();
     }
 
+    public List<AnexoDominio> getAllAnexoDominioAtivo() {
+        return anexoDominioRepository.findAllByAtivoTrue();
+    }
+
     public AnexoDominio saveAnexoDominio(AnexoDominio anexoDominio) {
         return anexoDominioRepository.save(anexoDominio);
     }

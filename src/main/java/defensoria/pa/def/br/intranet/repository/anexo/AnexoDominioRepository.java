@@ -10,4 +10,5 @@ import defensoria.pa.def.br.intranet.model.anexo.AnexoDominio;
 public interface AnexoDominioRepository extends CrudRepository<AnexoDominio, Integer> {
     Optional<AnexoDominio> findByNomeAnexoDominio(String nomeAnexoDominio);
     List<AnexoDominio> findAll();
+    List<AnexoDominio> findAllByAtivoTrue();
 }

@@ -47,11 +47,19 @@ public class AnexoCategoriaController {
         return ResponseEntity.ok(convertToDTO(anexoCategoria));
     }
 
-    @GetMapping(value = "/buscarAnexoCategorias")
-    public ResponseEntity<List<AnexoCategoriaDTO>> getAnexoCategorias() throws MalformedURLException, FileNotFoundException{
-        List<AnexoCategoria> anexoCategoriaList = anexoCategoriaService.getAllAnexoCategoria();
+    @GetMapping(value = "/buscarAnexoCategoriasAtivos", params = "nomeAnexoDominio")
+    public ResponseEntity<List<AnexoCategoriaDTO>> getAnexoCategorias(@RequestParam String nomeAnexoDominio) throws MalformedURLException, FileNotFoundException{
+        List<AnexoCategoria> anexoCategoriaList = anexoCategoriaService.getAllAnexoCategoriaAtivo(anexoDominioService.getAnexoDominio(nomeAnexoDominio));
         return ResponseEntity.ok(convertToDTO(anexoCategoriaList));
     }
+
+    @GetMapping(value = "/buscarAnexoCategoriasAtivos", params = "idAnexoDominio")
+    public ResponseEntity<List<AnexoCategoriaDTO>> getAnexoCategorias(@RequestParam Integer idAnexoDominio) throws MalformedURLException, FileNotFoundException{
+        List<AnexoCategoria> anexoCategoriaList = anexoCategoriaService.getAllAnexoCategoriaAtivo(anexoDominioService.getAnexoDominio(idAnexoDominio));
+        return ResponseEntity.ok(convertToDTO(anexoCategoriaList));
+    }
+
+    // FAZER BUSCA INATIVO
 
     @PostMapping(value = "/salvar")
     public ResponseEntity<AnexoCategoriaDTO> saveAnexoCategoria(

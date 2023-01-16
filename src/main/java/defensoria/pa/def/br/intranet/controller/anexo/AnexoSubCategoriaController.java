@@ -48,11 +48,19 @@ public class AnexoSubCategoriaController {
         return ResponseEntity.ok(convertToDTO(anexoSubCategoria));
     }
 
-    @GetMapping(value = "/buscarAnexoSubCategorias")
-    public ResponseEntity<List<AnexoSubCategoriaDTO>> getAnexoSubCategorias() {
-        List<AnexoSubCategoria> anexoSubCategoriaList = anexoSubCategoriaService.getAllAnexoSubCategoria();
+    @GetMapping(value = "/buscarAnexoSubCategoriasAtivos", params = {"nomeAnexoCategoria"})
+    public ResponseEntity<List<AnexoSubCategoriaDTO>> getAnexoSubCategorias(@RequestParam String nomeAnexoCategoria) {
+        List<AnexoSubCategoria> anexoSubCategoriaList = anexoSubCategoriaService.getAllAnexoSubCategoriaAtivo(anexoCategoriaService.getAnexoCategoria(nomeAnexoCategoria));
         return ResponseEntity.ok(convertToDTO(anexoSubCategoriaList));
     }
+
+    @GetMapping(value = "/buscarAnexoSubCategoriasAtivos", params = {"idAnexoCategoria"})
+    public ResponseEntity<List<AnexoSubCategoriaDTO>> getAnexoSubCategoriasAtivos(@RequestParam Integer idAnexoCategoria) {
+        List<AnexoSubCategoria> anexoSubCategoriaList = anexoSubCategoriaService.getAllAnexoSubCategoriaAtivo(anexoCategoriaService.getAnexoCategoria(idAnexoCategoria));
+        return ResponseEntity.ok(convertToDTO(anexoSubCategoriaList));
+    }
+    
+    // FAZER BUSCA INATIVO
 
     @PostMapping(value = "/salvar")
     public ResponseEntity<AnexoSubCategoriaDTO> saveAnexoSubCategoria(

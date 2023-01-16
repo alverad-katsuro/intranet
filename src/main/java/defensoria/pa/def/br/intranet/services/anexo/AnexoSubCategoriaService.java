@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import defensoria.pa.def.br.intranet.model.anexo.AnexoCategoria;
 import defensoria.pa.def.br.intranet.model.anexo.AnexoSubCategoria;
 import defensoria.pa.def.br.intranet.repository.anexo.AnexoSubCategoriaRepository;
 
@@ -32,6 +33,10 @@ public class AnexoSubCategoriaService {
 
     public List<AnexoSubCategoria> getAllAnexoSubCategoria() {
         return anexoSubCategoriaRepository.findAll();
+    }
+
+    public List<AnexoSubCategoria> getAllAnexoSubCategoriaAtivo(AnexoCategoria anexoCategoria) {
+        return anexoSubCategoriaRepository.findByAnexoCategoriaAndAtivoTrue(anexoCategoria);
     }
 
 }

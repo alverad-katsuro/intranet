@@ -48,7 +48,7 @@ public class AnexoCategoria extends Auditable {
     @OneToMany(mappedBy = "anexoCategoria", fetch = FetchType.LAZY)
     Set<Anexo> anexos = new HashSet<>(0);
 
-    @OneToMany(mappedBy = "anexoCategoria")
+    @OneToMany(mappedBy = "anexoCategoria", fetch = FetchType.LAZY)
     private Set<AnexoSubCategoria> anexoSubCategorias;
 
     public AnexoCategoria(Integer idAnexoCategoria) {

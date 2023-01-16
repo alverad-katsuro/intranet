@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import defensoria.pa.def.br.intranet.model.anexo.AnexoCategoria;
+import defensoria.pa.def.br.intranet.model.anexo.AnexoDominio;
 import defensoria.pa.def.br.intranet.repository.anexo.AnexoCategoriaRepository;
 
 @Service("AnexoCategoriaService")
@@ -24,6 +25,14 @@ public class AnexoCategoriaService {
 
     public List<AnexoCategoria> getAllAnexoCategoria() {
         return anexoCategoriaRepository.findAll();
+    }
+
+    public List<AnexoCategoria> getAllAnexoCategoriaAtivo(AnexoDominio anexoDominio) {
+        return anexoCategoriaRepository.findByAnexoDominioAndAtivoTrue(anexoDominio);
+    }
+
+    public List<AnexoCategoria> getAllAnexoCategoriaAtivo() {
+        return anexoCategoriaRepository.findAllByAtivoTrue();
     }
 
     public AnexoCategoria saveAnexoCategoria(AnexoCategoria anexoCategoria) {

@@ -48,6 +48,12 @@ public class AnexoDominioController {
         return ResponseEntity.ok(convertToDTO(anexoDominioList));
     }
 
+    @GetMapping(value = "/buscarAnexoDominiosAtivos")
+    public ResponseEntity<List<AnexoDominioDTO>> getAnexoDominiosAtivos() {
+        List<AnexoDominio> anexoDominioList = anexoDominioService.getAllAnexoDominioAtivo();
+        return ResponseEntity.ok(convertToDTO(anexoDominioList));
+    }
+
     @PostMapping(value = "/salvar")
     public ResponseEntity<AnexoDominioDTO> saveAnexoDominio(
             @RequestBody AnexoDominioDTO anexoDominioDTO) {

@@ -31,8 +31,8 @@ import lombok.NoArgsConstructor;
 @Entity(name = "anexo_sub_categoria")
 @EqualsAndHashCode(callSuper = false)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idAnexoSubCategoria")
-public class AnexoSubCategoria extends Auditable {
 
+public class AnexoSubCategoria extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_anexo_sub_categoria", nullable = false, unique = true)
