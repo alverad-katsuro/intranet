@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 import defensoria.pa.def.br.intranet.dto.anexo.request.AnexoSubCategoriaRequestDTO;
 import defensoria.pa.def.br.intranet.dto.anexo.response.AnexoSubCategoriaDTO;
 import defensoria.pa.def.br.intranet.model.anexo.AnexoSubCategoria;
-import defensoria.pa.def.br.intranet.services.anexos.AnexoCategoriaService;
-import defensoria.pa.def.br.intranet.services.anexos.AnexoSubCategoriaService;
+import defensoria.pa.def.br.intranet.services.anexo.AnexoCategoriaService;
+import defensoria.pa.def.br.intranet.services.anexo.AnexoSubCategoriaService;
 
 @RestController
 @RequestMapping("/anexoSubCategoria")

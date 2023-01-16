@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import defensoria.pa.def.br.intranet.dto.anexo.response.AnexoDominioDTO;
 import defensoria.pa.def.br.intranet.model.anexo.AnexoDominio;
-import defensoria.pa.def.br.intranet.services.anexos.AnexoDominioService;
+import defensoria.pa.def.br.intranet.services.anexo.AnexoDominioService;
 
 @RestController
 @RequestMapping("/anexoDominio")

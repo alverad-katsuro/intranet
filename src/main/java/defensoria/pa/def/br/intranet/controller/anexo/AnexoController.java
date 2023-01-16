@@ -34,10 +34,10 @@ import defensoria.pa.def.br.intranet.model.anexo.Anexo;
 import defensoria.pa.def.br.intranet.model.anexo.AnexoCategoria;
 import defensoria.pa.def.br.intranet.model.anexo.AnexoDominio;
 import defensoria.pa.def.br.intranet.model.anexo.AnexoSubCategoria;
-import defensoria.pa.def.br.intranet.services.anexos.AnexoCategoriaService;
-import defensoria.pa.def.br.intranet.services.anexos.AnexoDominioService;
-import defensoria.pa.def.br.intranet.services.anexos.AnexoService;
-import defensoria.pa.def.br.intranet.services.anexos.AnexoSubCategoriaService;
+import defensoria.pa.def.br.intranet.services.anexo.AnexoCategoriaService;
+import defensoria.pa.def.br.intranet.services.anexo.AnexoDominioService;
+import defensoria.pa.def.br.intranet.services.anexo.AnexoSubCategoriaService;
+import defensoria.pa.def.br.intranet.services.anexo.AnexoService;
 
 @RestController
 @RequestMapping("/anexo")
@@ -163,8 +163,6 @@ public class AnexoController {
         });
         anexoList.forEach(anexo -> {
             try {
-                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-                System.out.println(typeMap.map(anexo));
                 anexoCategoriaDTO.add(typeMap.map(anexo).add(WebMvcLinkBuilder
                         .linkTo(WebMvcLinkBuilder.methodOn(AnexoController.class).downloadAnexo(anexo.getIdAnexo()))
                         .withSelfRel()));
