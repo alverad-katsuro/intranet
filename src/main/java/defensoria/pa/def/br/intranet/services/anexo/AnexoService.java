@@ -1,7 +1,9 @@
 package defensoria.pa.def.br.intranet.services.anexo;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,6 +14,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,9 +39,14 @@ public class AnexoService {
         return anexoRepository.findByNomeAnexo(anexoNome).orElse(null);
     }
 
-    public Resource getFileAsResource(Anexo anexo) {
-        return null;
-    }
+    public Resource getFileAsResource(Anexo anexo) throws MalformedURLException, FileNotFoundException {
+        Path file = Paths.get(String.format("%s/%s/%s", UPLOAD_DIRECTORY, anexo.getAnexoDominio().getNomeAnexoDominio(), anexo.getNomeAnexo()));
+        if (file != null) {
+            return new UrlResource(file.toUri());
+        } else {
+            throw new FileNotFoundException(anexo.getTituloAnexo());
+        }
+    } 
 
     public boolean existsById(int anexoId) {
         return anexoRepository.existsById(anexoId);

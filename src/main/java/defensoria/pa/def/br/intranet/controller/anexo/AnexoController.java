@@ -111,10 +111,7 @@ public class AnexoController {
         Anexo anexo = convertToEntity(anexoDTO);
         System.out.println(anexo);
         anexo = anexoService.saveAnexo(anexo, anexoDTO.getArquivo());
-        return ResponseEntity
-                .ok(convertToDTO(anexo).add(WebMvcLinkBuilder
-                        .linkTo(WebMvcLinkBuilder.methodOn(AnexoController.class).downloadAnexo(anexo.getIdAnexo()))
-                        .withSelfRel()));
+        return ResponseEntity.ok(convertToDTO(anexo));
     }
 
     @PutMapping(value = "/atualizar/{anexoId}")
