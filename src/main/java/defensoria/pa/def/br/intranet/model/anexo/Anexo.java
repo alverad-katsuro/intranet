@@ -63,7 +63,6 @@ public class Anexo extends Auditable {
     @JoinColumn(name = "id_anexo_sub_categoria", nullable = false, unique = false)
     private AnexoSubCategoria anexoSubCategoria;
 
-
     @JsonIgnore
     public String getNomeAnexoDominio(){
         return this.anexoDominio.getNomeAnexoDominio();

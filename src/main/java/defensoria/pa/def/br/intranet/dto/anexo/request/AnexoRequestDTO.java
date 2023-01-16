@@ -12,9 +12,7 @@ public class AnexoRequestDTO extends RepresentationModel<AnexoRequestDTO> {
     private Integer idAnexo;
     
     private String tituloAnexo;
-    
-    private String nomeAnexo;
-    
+        
     private Integer idAnexoDominio;
     
     private Integer idAnexoCategoria;

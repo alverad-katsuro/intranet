@@ -35,6 +35,10 @@ public class AnexoService {
         return anexoRepository.findByAnexoDominio(anexoDominio);
     }
 
+    public List<Anexo> findByAnexoDominioAndAtivoTrue(AnexoDominio anexoDominio) {
+        return anexoRepository.findByAnexoDominioAndAtivoTrue(anexoDominio);
+    }
+
     public Anexo getAnexo(String anexoNome) {
         return anexoRepository.findByNomeAnexo(anexoNome).orElse(null);
     }

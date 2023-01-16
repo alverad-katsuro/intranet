@@ -57,7 +57,6 @@ public class AnexoCategoriaController {
     public ResponseEntity<AnexoCategoriaDTO> saveAnexoCategoria(
             @RequestBody AnexoCategoriaRequestDTO anexoCategoriaRequestDTO) {
         AnexoCategoria anexoCategoria = convertToEntity(anexoCategoriaRequestDTO);
-        System.out.println(anexoCategoria);
         anexoCategoria = anexoCategoriaService.saveAnexoCategoria(anexoCategoria);
         return ResponseEntity.ok(convertToDTO(anexoCategoria));
     }

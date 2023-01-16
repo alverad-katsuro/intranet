@@ -36,8 +36,8 @@ import defensoria.pa.def.br.intranet.model.anexo.AnexoDominio;
 import defensoria.pa.def.br.intranet.model.anexo.AnexoSubCategoria;
 import defensoria.pa.def.br.intranet.services.anexo.AnexoCategoriaService;
 import defensoria.pa.def.br.intranet.services.anexo.AnexoDominioService;
-import defensoria.pa.def.br.intranet.services.anexo.AnexoSubCategoriaService;
 import defensoria.pa.def.br.intranet.services.anexo.AnexoService;
+import defensoria.pa.def.br.intranet.services.anexo.AnexoSubCategoriaService;
 
 @RestController
 @RequestMapping("/anexo")
@@ -61,6 +61,12 @@ public class AnexoController {
     @GetMapping(value = "/buscarAnexos", params = { "nomeAnexoDominio" })
     public ResponseEntity<List<AnexoDTO>> getAnexos(@RequestParam String nomeAnexoDominio) {
         List<Anexo> anexosList = anexoService.findByAnexoDominio(anexoDominioService.getAnexoDominio(nomeAnexoDominio));
+        return ResponseEntity.ok(convertToDTO(anexosList));
+    }
+
+    @GetMapping(value = "/buscarAnexosAtivos", params = { "nomeAnexoDominio"})
+    public ResponseEntity<List<AnexoDTO>> getAnexosAtivos(@RequestParam String nomeAnexoDominio) {
+        List<Anexo> anexosList = anexoService.findByAnexoDominioAndAtivoTrue(anexoDominioService.getAnexoDominio(nomeAnexoDominio));
         return ResponseEntity.ok(convertToDTO(anexosList));
     }
 
@@ -109,7 +115,6 @@ public class AnexoController {
     @PostMapping(value = "/salvar", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<AnexoDTO> saveAnexo(@ModelAttribute AnexoRequestDTO anexoDTO) throws Exception {
         Anexo anexo = convertToEntity(anexoDTO);
-        System.out.println(anexo);
         anexo = anexoService.saveAnexo(anexo, anexoDTO.getArquivo());
         return ResponseEntity.ok(convertToDTO(anexo));
     }
