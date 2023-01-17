@@ -34,7 +34,7 @@ import lombok.NoArgsConstructor;
 
 public class AnexoSubCategoria extends Auditable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id_anexo_sub_categoria", nullable = false, unique = true)
     private Integer idAnexoSubCategoria;
 

@@ -18,6 +18,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,7 +37,7 @@ import lombok.NoArgsConstructor;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idAnexo")
 public class Anexo extends Auditable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id_anexo", nullable = false, unique = true)
     private Integer idAnexo;
     
@@ -62,6 +63,11 @@ public class Anexo extends Auditable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_anexo_sub_categoria", nullable = false, unique = false)
     private AnexoSubCategoria anexoSubCategoria;
+
+    @Audited
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_anexo_revogado_por", nullable = true, unique = false)
+    private Anexo anexoRevogadoPor;
 
     @JsonIgnore
     public String getNomeAnexoDominio(){

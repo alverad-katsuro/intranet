@@ -33,7 +33,7 @@ import lombok.NoArgsConstructor;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idAnexoCategoria")
 public class AnexoCategoria extends Auditable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id_anexo_categoria", nullable = false, unique = true)
     private Integer idAnexoCategoria;
 
