@@ -18,6 +18,10 @@ public class AnexoDominioService {
         return anexoDominioRepository.findByNomeAnexoDominio(nomeAnexoDominio).orElse(null);
     }
 
+    public List<AnexoDominio> getByNomeAnexoDominioContainsIgnoreCase(String nomeAnexoDominio) {
+        return anexoDominioRepository.findByNomeAnexoDominioContainsIgnoreCase(nomeAnexoDominio);
+    }
+
     public List<AnexoDominio> getAllAnexoDominio() {
         return anexoDominioRepository.findAll();
     }

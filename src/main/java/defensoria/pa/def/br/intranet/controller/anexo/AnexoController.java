@@ -58,26 +58,32 @@ public class AnexoController {
     @Autowired
     ModelMapper modelMapper;
 
-    @GetMapping(value = "/buscarAnexos", params = { "nomeAnexoDominio" })
+    @GetMapping(value = "/consultarAnexos", params = { "nomeAnexoDominio" })
     public ResponseEntity<List<AnexoDTO>> getAnexos(@RequestParam String nomeAnexoDominio) {
         List<Anexo> anexosList = anexoService.findByAnexoDominio(anexoDominioService.getAnexoDominio(nomeAnexoDominio));
         return ResponseEntity.ok(convertToDTO(anexosList));
     }
 
-    @GetMapping(value = "/buscarAnexosAtivos", params = { "nomeAnexoDominio"})
+    @GetMapping(value = "/consultarAnexosAtivos", params = { "nomeAnexoDominio"})
     public ResponseEntity<List<AnexoDTO>> getAnexosAtivos(@RequestParam String nomeAnexoDominio) {
         List<Anexo> anexosList = anexoService.findByAnexoDominioAndAtivoTrue(anexoDominioService.getAnexoDominio(nomeAnexoDominio));
         return ResponseEntity.ok(convertToDTO(anexosList));
     }
 
-    @GetMapping(value = "/buscarAnexo", params = { "anexoNome" })
+    @GetMapping(value = "/consultarAnexosAtivosIds", params = { "nomeAnexoDominio"})
+    public ResponseEntity<List<AnexoRequestDTO>> getAnexosAtivosReq(@RequestParam String nomeAnexoDominio) {
+        List<Anexo> anexosList = anexoService.findByAnexoDominioAndAtivoTrue(anexoDominioService.getAnexoDominio(nomeAnexoDominio));
+        return ResponseEntity.ok(convertToRequest(anexosList));
+    }
+
+    @GetMapping(value = "/consultarAnexo", params = { "anexoNome" })
     public ResponseEntity<AnexoDTO> getAnexo(@RequestParam("anexoNome") String anexoNome)
             throws MalformedURLException, FileNotFoundException {
         Anexo anexo = anexoService.getAnexo(anexoNome);
         return ResponseEntity.ok().body(convertToDTO(anexo));
     }
 
-    @GetMapping(value = "/buscarAnexo", params = { "idAnexo" })
+    @GetMapping(value = "/consultarAnexo", params = { "idAnexo" })
     public ResponseEntity<AnexoDTO> getAnexo(@RequestParam("idAnexo") Integer idAnexo)
             throws MalformedURLException, FileNotFoundException {
         Anexo anexo = anexoService.getAnexo(idAnexo);
@@ -115,16 +121,16 @@ public class AnexoController {
     @PostMapping(value = "/salvar", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<AnexoDTO> saveAnexo(@ModelAttribute AnexoRequestDTO anexoDTO) throws Exception {
         Anexo anexo = convertToEntity(anexoDTO);
+        System.out.println(anexo);
         anexo = anexoService.saveAnexo(anexo, anexoDTO.getArquivo());
         return ResponseEntity.ok(convertToDTO(anexo));
     }
 
-    @PutMapping(value = "/atualizar/{anexoId}")
-    public ResponseEntity<AnexoDTO> atualizarAnexo(@ModelAttribute AnexoRequestDTO anexoDTO,
-            @PathVariable int anexoId)
+    @PutMapping(value = "/atualizar")
+    public ResponseEntity<AnexoDTO> atualizarAnexo(@ModelAttribute AnexoRequestDTO anexoDTO)
             throws IOException {
         Anexo anexo = convertToEntity(anexoDTO);
-        if (anexoService.existsById(anexoId)) {
+        if (anexo != null) {
             if (anexoDTO.getArquivo().isEmpty()) {
                 anexo = anexoService.saveAnexo(anexo);
             } else {
@@ -196,7 +202,7 @@ public class AnexoController {
             typeMap.setProvider(provider);
         }
         typeMap.addMappings(mapper -> {
-            mapper.<AnexoDominio>map(src -> anexoDominioService.getAnexoDominio(anexoRequestDTO.getIdAnexoDominio()),
+            mapper.<AnexoDominio>map(src -> this.anexoDominioService.getAnexoDominio(anexoRequestDTO.getIdAnexoDominio()),
                     Anexo::setAnexoDominio);
             mapper.<AnexoCategoria>map(
                     src -> this.anexoCategoriaService.getAnexoCategoria(anexoRequestDTO.getIdAnexoCategoria()),
@@ -207,5 +213,22 @@ public class AnexoController {
         });
         Anexo anexo = typeMap.map(anexoRequestDTO);
         return anexo;
+    }
+
+    private List<AnexoRequestDTO> convertToRequest(List<Anexo> anexoList) {
+        List<AnexoRequestDTO> anexoRequestDTOs = new ArrayList<>();
+        TypeMap<Anexo, AnexoRequestDTO> typeMap = modelMapper.typeMap(Anexo.class, AnexoRequestDTO.class);
+        typeMap.addMappings(mapper -> {
+            mapper.<Integer>map(src -> src.getAnexoDominio().getIdAnexoDominio(),
+                AnexoRequestDTO::setIdAnexoDominio);
+            mapper.<Integer>map(
+                    src -> src.getAnexoCategoria().getIdAnexoCategoria(),
+                    AnexoRequestDTO::setIdAnexoCategoria);
+            mapper.<Integer>map(
+                    src -> src.getAnexoSubCategoria().getIdAnexoSubCategoria(),
+                    AnexoRequestDTO::setIdAnexoSubCategoria);
+        });
+        anexoList.forEach(e -> anexoRequestDTOs.add(typeMap.map(e)));
+        return anexoRequestDTOs;
     }
 }

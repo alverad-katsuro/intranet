@@ -42,19 +42,19 @@ public class AnexoSubCategoriaController {
     @Autowired
     ModelMapper modelMapper;
 
-    @GetMapping(value = "/buscarAnexoSubCategoria", params = "nomeAnexoSubCategoria")
+    @GetMapping(value = "/consultarAnexoSubCategoria", params = "nomeAnexoSubCategoria")
     public ResponseEntity<AnexoSubCategoriaDTO> getAnexoSubCategoria(@RequestParam String nomeAnexoSubCategoria) {
         AnexoSubCategoria anexoSubCategoria = anexoSubCategoriaService.getAnexoSubCategoria(nomeAnexoSubCategoria);
         return ResponseEntity.ok(convertToDTO(anexoSubCategoria));
     }
 
-    @GetMapping(value = "/buscarAnexoSubCategoriasAtivos", params = {"nomeAnexoCategoria"})
+    @GetMapping(value = "/consultarAnexoSubCategoriasAtivos", params = {"nomeAnexoCategoria"})
     public ResponseEntity<List<AnexoSubCategoriaDTO>> getAnexoSubCategorias(@RequestParam String nomeAnexoCategoria) {
         List<AnexoSubCategoria> anexoSubCategoriaList = anexoSubCategoriaService.getAllAnexoSubCategoriaAtivo(anexoCategoriaService.getAnexoCategoria(nomeAnexoCategoria));
         return ResponseEntity.ok(convertToDTO(anexoSubCategoriaList));
     }
 
-    @GetMapping(value = "/buscarAnexoSubCategoriasAtivos", params = {"idAnexoCategoria"})
+    @GetMapping(value = "/consultarAnexoSubCategoriasAtivos", params = {"idAnexoCategoria"})
     public ResponseEntity<List<AnexoSubCategoriaDTO>> getAnexoSubCategoriasAtivos(@RequestParam Integer idAnexoCategoria) {
         List<AnexoSubCategoria> anexoSubCategoriaList = anexoSubCategoriaService.getAllAnexoSubCategoriaAtivo(anexoCategoriaService.getAnexoCategoria(idAnexoCategoria));
         return ResponseEntity.ok(convertToDTO(anexoSubCategoriaList));

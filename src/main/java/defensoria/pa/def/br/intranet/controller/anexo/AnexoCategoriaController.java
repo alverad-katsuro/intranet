@@ -41,19 +41,19 @@ public class AnexoCategoriaController {
     @Autowired
     ModelMapper modelMapper;
 
-    @GetMapping(value = "/buscarAnexoCategoria", params = "nomeAnexoCategoria")
+    @GetMapping(value = "/consultarAnexoCategoria", params = "nomeAnexoCategoria")
     public ResponseEntity<AnexoCategoriaDTO> getAnexoCategoria(@RequestParam String nomeAnexoCategoria) {
         AnexoCategoria anexoCategoria = anexoCategoriaService.getAnexoCategoria(nomeAnexoCategoria);
         return ResponseEntity.ok(convertToDTO(anexoCategoria));
     }
 
-    @GetMapping(value = "/buscarAnexoCategoriasAtivos", params = "nomeAnexoDominio")
+    @GetMapping(value = "/consultarAnexoCategoriasAtivos", params = "nomeAnexoDominio")
     public ResponseEntity<List<AnexoCategoriaDTO>> getAnexoCategorias(@RequestParam String nomeAnexoDominio) throws MalformedURLException, FileNotFoundException{
         List<AnexoCategoria> anexoCategoriaList = anexoCategoriaService.getAllAnexoCategoriaAtivo(anexoDominioService.getAnexoDominio(nomeAnexoDominio));
         return ResponseEntity.ok(convertToDTO(anexoCategoriaList));
     }
 
-    @GetMapping(value = "/buscarAnexoCategoriasAtivos", params = "idAnexoDominio")
+    @GetMapping(value = "/consultarAnexoCategoriasAtivos", params = "idAnexoDominio")
     public ResponseEntity<List<AnexoCategoriaDTO>> getAnexoCategorias(@RequestParam Integer idAnexoDominio) throws MalformedURLException, FileNotFoundException{
         List<AnexoCategoria> anexoCategoriaList = anexoCategoriaService.getAllAnexoCategoriaAtivo(anexoDominioService.getAnexoDominio(idAnexoDominio));
         return ResponseEntity.ok(convertToDTO(anexoCategoriaList));

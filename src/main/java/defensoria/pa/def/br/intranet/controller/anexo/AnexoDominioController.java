@@ -36,19 +36,13 @@ public class AnexoDominioController {
     @Autowired
     ModelMapper modelMapper;
 
-    @GetMapping(value = "/buscarAnexoDominio", params = "nomeAnexoDominio")
+    @GetMapping(value = "/consultarAnexoDominio", params = "nomeAnexoDominio")
     public ResponseEntity<AnexoDominioDTO> getAnexoDominio(@RequestParam String nomeAnexoDominio) {
         AnexoDominio anexoDominio = anexoDominioService.getAnexoDominio(nomeAnexoDominio);
         return ResponseEntity.ok(convertToDTO(anexoDominio));
     }
 
-    @GetMapping(value = "/buscarAnexoDominios")
-    public ResponseEntity<List<AnexoDominioDTO>> getAnexoDominios() {
-        List<AnexoDominio> anexoDominioList = anexoDominioService.getAllAnexoDominio();
-        return ResponseEntity.ok(convertToDTO(anexoDominioList));
-    }
-
-    @GetMapping(value = "/buscarAnexoDominiosAtivos")
+    @GetMapping(value = "/consultarAnexoDominiosAtivos")
     public ResponseEntity<List<AnexoDominioDTO>> getAnexoDominiosAtivos() {
         List<AnexoDominio> anexoDominioList = anexoDominioService.getAllAnexoDominioAtivo();
         return ResponseEntity.ok(convertToDTO(anexoDominioList));
