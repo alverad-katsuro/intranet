@@ -1,7 +1,6 @@
 spring:
   profiles:
-    #default: dev 
-    active: @activatedProperties@
+    default: dev 
   application:
     name: API Defensoria
 
@@ -26,6 +25,13 @@ logging:
   file:
     name: /var/log/defensoria.log
     path: /var/log
+
+springdoc:
+  swagger-ui:
+    use-root-path: true
+  show-login-endpoint: true
+  api-docs:
+    path: /v3/api-docs
 
 rsa:
   public-key: classpath:certs/public.pem
