@@ -1,0 +1,25 @@
+logging:
+  level: 
+    '[org.hibernate.stat]': debug
+
+spring:
+  devtools:
+    add-properties: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/intranetdb
+    username: intraadmin
+    password: mudeme
+    driver-class-name: org.postgresql.Driver
+    
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      '[hibernate.format_sql]' : true
+      '[hibernate.generate_statistics]' : true
+      '[persistence.schema-generation.scripts.create-target]' : create.sql
+

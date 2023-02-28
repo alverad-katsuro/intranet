@@ -1,4 +1,4 @@
-package defensoria.pa.def.br.intranet.config;
+package defensoria.pa.def.br.intranet.util;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

@@ -1,0 +1,35 @@
+spring:
+  profiles:
+    #default: dev 
+    active: @activatedProperties@
+  application:
+    name: API Defensoria
+
+  data:
+    web:
+      pageable:
+        max-page-size: 100
+  jpa:
+    properties:
+      hibernate:
+        "[generate_statistics]" : true        
+
+server:
+  port: 9000
+  compression:
+    enabled: true
+    min-response-size: 2048
+    mime-types:
+    - application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
+
+logging:
+  file:
+    name: /var/log/defensoria.log
+    path: /var/log
+
+rsa:
+  public-key: classpath:certs/public.pem
+  private-key: classpath:certs/private.pem
+
+env:
+  anexosDir: ${PATHANEXOS}

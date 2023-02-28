@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.1</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<version>3.0.2</version>
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>defensoria.pa.def.br.intranet</groupId>
 	<artifactId>intranet</artifactId>
@@ -17,22 +18,22 @@
 		<java.version>19</java.version>
 	</properties>
 	<profiles>
-        <profile>
-            <id>dev</id>
-            <properties>
-                <activatedProperties>dev</activatedProperties>
-            </properties>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<activatedProperties>dev</activatedProperties>
+			</properties>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
-        </profile>
-        <profile>
+		</profile>
+		<profile>
 			<id>prod</id>
-            <properties>
+			<properties>
 				<activatedProperties>prod</activatedProperties>
-            </properties>
-        </profile>
-    </profiles>
+			</properties>
+		</profile>
+	</profiles>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -54,6 +55,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.modelmapper</groupId>
@@ -65,7 +70,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-envers -->
 		<dependency>
 			<groupId>org.springframework.data</groupId>
@@ -126,7 +131,7 @@
 						</exclude>
 					</excludes>
 				</configuration>
-			</plugin>				
+			</plugin>
 		</plugins>
 	</build>
 
