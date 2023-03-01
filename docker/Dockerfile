@@ -1,4 +1,5 @@
 FROM openjdk:19
 VOLUME /tmp
 COPY target/*.jar app.jar
-ENTRYPOINT ["java","-jar", "-Dspring.profiles.active=prod","/app.jar"]
+EXPOSE 9000
+ENTRYPOINT ["java","-jar", "-Dspring.profiles.active=dev","/app.jar"]

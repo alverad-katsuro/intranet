@@ -6,7 +6,7 @@ spring:
   devtools:
     add-properties: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/intranetdb
+    url: jdbc:postgresql://10.85.200.106:5432/intranetdb
     username: intraadmin
     password: mudeme
     driver-class-name: org.postgresql.Driver

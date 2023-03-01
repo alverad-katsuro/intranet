@@ -1,14 +1,16 @@
 version: '3.4'
 
 services:
-  backend:
-    container_name: intranetBack
+  intranetback:
+    container_name: intranetback
     build:
-      context: .
+      context: ./
       dockerfile: docker/Dockerfile
     env_file:
       - .env
-    image: intranet:latest
+    image: intranetback:latest
+    volumes:
+      - /home/alverad/anexos:/anexos
     ports:
       - 9000:9000
     restart: always
